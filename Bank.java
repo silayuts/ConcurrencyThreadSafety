@@ -29,7 +29,9 @@ public class Bank {
         if (from == to) {
             throw new IllegalArgumentException("cannot transfer to the same account");
         }
+        
 
+       
         // ---------------------------------------------------------------
         // TODO 2  ลำดับการล็อก
         //
@@ -45,8 +47,19 @@ public class Bank {
         //
         // ห้ามแก้ด้วยการเอาล็อกใบใดใบหนึ่งออก — ยอดรวมจะเพี้ยน
         // ---------------------------------------------------------------
-        synchronized (from) {
-            synchronized (to) {
+     
+        
+            //boolean fwd = from.id() < to.id();
+            //Account first = from ;
+            //Account secound = fwd ? from : to;
+        Account first = from ;
+        Account second = to ;
+        if(from.id()>to.id()){
+            first = to ;
+            second = from ;
+        }
+        synchronized (first) {
+            synchronized (second) { 
                 if (!from.withdraw(amount)) {
                     return false;
                 }
